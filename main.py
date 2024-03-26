@@ -18,35 +18,30 @@ def delayTest(nameserver:str,repeat:int):
         alltime += end - start 
     return alltime/repeat*1000
 try:
-    csv_reader = csv.reader(open(csvPath))
+    csv_reader = csv.reader(open(csvPath,encoding='utf-8'))
 except:
     print("读取dns列表失败")
     input()
     exit()
 
-mindelay = 2000
-minDelayNameserver = ""
-with tqdm.tqdm(total=len(open(csvPath).readlines())) as pbar:
+delayTable = []
+with tqdm.tqdm(total=len(open(csvPath,encoding='utf-8').readlines())) as pbar:
     for row in csv_reader:
         for i in range(len(row)):
             if i == 0:
-                print("\n",row[0])
+#                print("\n",row[0])
+                pbar.desc = row[0]
             elif row[i] == "":
                 continue
             else:
-                print(row[i],end="\t\t")
+#                print(row[i],end="\t\t")
                 delay = delayTest(row[i],5)
-                print(format(delay,'.4f'),"ms")
-                if delay < mindelay:
-                    mindelay = delay
-                    minDelayNameserver = row[0] + " : " +row[i]
+#                print(format(delay,'.4f'),"ms")
+                delayTable.append((row[0] + " " + row[i], delay))
         pbar.update(1)
+
 print("---------------")
-print(f"MinDelayNameServer is {minDelayNameserver}\n{format(mindelay,'.4f')}ms")
+print("MinDelayNameServer is")
+for i in sorted(delayTable, key=lambda x:x[1]):
+    print(f"{i[0]} {format(i[1],'.2f')}ms")
 input()
-
-
-              
-
-
-
