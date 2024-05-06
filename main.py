@@ -1,11 +1,12 @@
 import time, csv, tqdm, dns.resolver, requests
 
-csv_url = "https://github.com/Kakune55/DNSspeedtest/releases/download/v1.1.0/dnslist.csv"
+csv_url = "https://github.com/Kakune55/DNSspeedtest/releases/latest/download/dnslist.csv"
 domain = "baidu.com"
 testRepeat = 10 #必须大于等于1 且为整数
 csvPath = "dnslist.csv"
 
-def delayTest(nameserver:str,repeat:int):
+def delayTest(nameserver:str,repeat:int): 
+    "循环测试"
     resolver = dns.resolver.Resolver()
     resolver.nameservers = [nameserver]
     alltime = 0
@@ -50,23 +51,23 @@ def runTest(csvPath:str,repeat:int):
             print(f"{format(i[1],'.0f')} ms\t{i[0]}")
 
 if __name__ == '__main__':
-    
+    print("初始化")
     try:
-        print("尝试从在线加载DNS列表",end="--")
+        print("尝试从在线加载DNS列表",end="",flush=True)
         csv_reader = OnlineRead()
-        print("成功")
+        print("-成功")
     except:
-        print("失败")
+        print("-失败")
         try:
-            print("尝试从本地加载DNS列表",end="--")
+            print("尝试从本地加载DNS列表",end="",flush=True)
             csv_reader = localRead()
-            print("成功")
+            print("-成功")
         except:
-            print("失败")
+            print("-失败")
             input()
             exit()
     
-    menuSwitch = input("1.快速测试 2.平均值测试")
+    menuSwitch = input("\n1.快速测试 2.平均值测试\n输入你的选项:")
     if menuSwitch == "1":
         print(f"开始快速测试")
         runTest(csvPath, 1)
@@ -75,6 +76,6 @@ if __name__ == '__main__':
         runTest(csvPath, testRepeat)
     else:
         print("未知选项")
-    input()
+    input("测试完成!按回车键退出")
     exit()
     
