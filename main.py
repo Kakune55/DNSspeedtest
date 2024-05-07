@@ -1,4 +1,4 @@
-import time, os,csv, tqdm, dns.resolver, requests, numpy
+import time, os, csv, tqdm, dns.resolver, requests, numpy
 
 csv_url = (
     "https://github.com/Kakune55/DNSspeedtest/releases/latest/download/dnslist.csv"
@@ -20,7 +20,7 @@ def delayTest(nameserver: str, repeat: int) -> list:
             end = time.time()
         except:
             return 9999
-        resultList.append((end - start)*1000)
+        resultList.append((end - start) * 1000)
     return resultList
 
 
@@ -52,13 +52,14 @@ def runTest(csvPath: str, repeat: int):
                     continue
                 else:
                     delay = delayTest(row[i], repeat)
-                    delayTable.append([
-                        numpy.mean(delay),
-                        numpy.std(delay),
-                        numpy.amax(delay),
-                        numpy.amin(delay),
-                        row[0] + " " + row[i]
-                    ]
+                    delayTable.append(
+                        [
+                            numpy.mean(delay),
+                            numpy.std(delay),
+                            numpy.amax(delay),
+                            numpy.amin(delay),
+                            row[0] + " " + row[i],
+                        ]
                     )
             pbar.update(1)
 
@@ -68,12 +69,11 @@ def runTest(csvPath: str, repeat: int):
         resultTable.append(i)
     for i in resultTable:  # 格式化输出
         for j in i:
-            if isinstance(j,str):
+            if isinstance(j, str):
                 print(j)
             else:
-                print(formatTime(j),end="\t")
+                print(formatTime(j), end="\t")
     return resultTable
-                
 
 
 if __name__ == "__main__":
@@ -101,14 +101,21 @@ if __name__ == "__main__":
         print(f"开始测试 循环次数：{testRepeat}")
         resultTable = runTest(csvPath, testRepeat)
     else:
-        print("未知选项") 
+        print("未知选项")
     if input("测试完成!按回车键退出 输入 s 将结果保存为csv文件") == "s":
         try:
-            resultTable[0]=["平均值","标准差","最大值","最小值","单位ms"]
-            with open(f"{os.path.join(os.path.expanduser('~'),'Desktop')}/result.csv",'wt',newline='') as f:
+            resultTable[0] = ["平均值", "标准差", "最大值", "最小值", "单位ms"]
+            with open(
+                f"{os.path.join(os.path.expanduser('~'),'Desktop')}/result.csv",
+                "wt",
+                newline="",
+            ) as f:
                 cw = csv.writer(f)
                 cw.writerows(resultTable)
-                print("文件已保存至 ",f"{os.path.join(os.path.expanduser('~'),'Desktop')}/result.csv")
+                print(
+                    "文件已保存至 ",
+                    f"{os.path.join(os.path.expanduser('~'),'Desktop')}/result.csv",
+                )
         except:
             print("保存失败")
         input()

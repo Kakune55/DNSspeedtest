@@ -1,11 +1,12 @@
 # DNS SpeedTest
 ![alt text](https://www.lifewire.com/thmb/xVHr44B8fqTlF6aG8nk3Sp-aMDM=/2644x1133/filters:fill(auto,1)/GettyImages-585297068-52005387a57248a19e3ee29bc1af44b4.jpg)
 ## 一个简易的DNS测速程序
-通过软件自带的一个常用DNS服务器列表 测试它们的A记录平均解析速度（5次）  
+通过软件自带的一个常用DNS服务器列表 测试它们的A记录平均解析速度（10次）  
+可将结果保存至文件  
 并给出用时最短的DNS服务器
 
 ## 使用方式
-下载软件和dnslist.csv文件 并将它们放置在同一目录下 运行主程序
+下载软件本体和dnslist.csv文件(网络条件良好时可省略) 并将它们放置在同一目录下 运行主程序
 
 ## 问题
 功能简陋 暂不支持IPv6 DoH DoT  
