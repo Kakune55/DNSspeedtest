@@ -1,0 +1,5 @@
+test_repeat: 10
+dns_list_path: dns_list.csv
+test_domain: cloudflare.com
+timeout: 3
+concurrent: false

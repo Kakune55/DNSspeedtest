@@ -1,5 +1,0 @@
-dnspython==2.6.1
-tqdm==4.66.2
-requests==2.31.0
-numpy==1.26.4
-prettytable==3.12.0
